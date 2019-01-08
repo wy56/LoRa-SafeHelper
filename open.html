@@ -1,0 +1,40 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="5" />
+</head>
+<body>
+    <h1>保險櫃已開啟～～</h1>
+</body>
+
+<script>
+var notifyConfig = {
+    body: "您得保險櫃已經被開啟囉～",
+    icon: "http://www.haotu.net/up/3358/512/21-Safe.png"
+  }
+  
+  function createNotify() {
+    if (!("Notification" in window)) { // 檢查瀏覽器是否支援通知
+      console.log("您得保險櫃已經被開啟囉～");
+    } else if (Notification.permission === "granted") { // 使用者已同意通知
+      var notification = new Notification(
+        "您的小幫手 LoRa ", notifyConfig
+      );
+    } else if (Notification.permission !== "denied") {
+      // 通知權限為 default (未要求) or undefined (老舊瀏覽器的未知狀態)，向使用者要求權限
+      Notification.requestPermission(function(permission) {
+        if (permission === "granted") {
+          var notification = new Notification("Hi there!", notifyConfig);
+        }
+      });
+    }
+  }
+  
+  function sendNotify(msg) {
+    var notify = new Notification(msg.title , {
+      icon: msg.icon,
+      body: msg.body,
+      tag: msg.tag,
+    });
+  }
+  createNotify();
+</script>
